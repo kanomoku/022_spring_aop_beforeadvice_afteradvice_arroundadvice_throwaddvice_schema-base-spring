@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--  配置通知类的对象，在切面中引入  -->
+	<bean id="mybeforeadvice" class="com.advice.MyBeforeAdvice"></bean>
+	<bean id="myafteradvice" class="com.advice.MyAfterAdvice"></bean>
+	<bean id="myArroundAdvice" class="com.advice.MyArroundAdvice"></bean>
+	<bean id="myThrowAdvice" class="com.advice.MyThrowAdvice"></bean>
+	<!--配置Demo类 测试时候使用 -->
+	<bean id="demo" class="com.test.Demo"></bean>
+	
+	<!-- 配置切面 -->
+	<!-- schema-based方式配置切点 -->
+	<aop:config>
+		<!-- * 通配符  匹配任意方法名 任意类名  任意一级包名  -->   
+		<!-- 希望匹配任意方法参数 方法(..) -->
+		<aop:pointcut expression="execution(* com.test.Demo.demo1())" id="mypoint1" />
+		<aop:pointcut expression="execution(* com.test.Demo.demo2())" id="mypoint2" />
+		<aop:pointcut expression="execution(* com.test.Demo.demo3())" id="mypoint3" />
+		<aop:pointcut expression="execution(* com.test.Demo.demo4())" id="mypoint4" />
+		<aop:pointcut expression="execution(* com.test.Demo.demo5(..))" id="mypoint5" />
+		<!-- <aop:pointcut expression="execution(* com.test.Demo.*(..))" id="mypoint" /> -->
+		<!-- 通知 -->
+		<aop:advisor advice-ref="mybeforeadvice" pointcut-ref="mypoint1" />
+		<aop:advisor advice-ref="myafteradvice" pointcut-ref="mypoint2" />
+		<aop:advisor advice-ref="myArroundAdvice" pointcut-ref="mypoint3" />
+		<aop:advisor advice-ref="myThrowAdvice" pointcut-ref="mypoint4" />
+		<aop:advisor advice-ref="mybeforeadvice" pointcut-ref="mypoint5" />
+		<aop:advisor advice-ref="myafteradvice" pointcut-ref="mypoint5" />
+	</aop:config>
+
+</beans>
