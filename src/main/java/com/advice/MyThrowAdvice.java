@@ -16,4 +16,7 @@ public class MyThrowAdvice implements ThrowsAdvice {
 		System.out.println("执行异常通知 通过schema-base方式" + ex.getMessage());
 	}
 
+	public void afterThrowing(Exception ex) throws Throwable {
+		System.out.println("执行异常通过-schema-base 方式 ");
+	}
 }
